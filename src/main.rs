@@ -15,6 +15,7 @@ use clap::Parser;
 #[command(version, about)]
 struct Cli {
     /// URL to open
+    #[arg(default_value = "https://github.com/ilpropheta/bellamy")]
     url: String,
 
     /// Create borderless fullscreens on current monitor
