@@ -15,7 +15,7 @@ use clap::Parser;
 #[command(version, about)]
 struct Cli {
     /// URL to open
-    #[arg(default_value = "https://github.com/ilpropheta/bellamy")]
+    #[arg(default_value = "https://ilpropheta.github.io/bellamy")]
     url: String,
 
     /// Create maximized window

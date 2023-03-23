@@ -2,7 +2,7 @@
 name = "bellamy"
 version = "0.1.0"
 edition = "2021"
-description = "Description coming from crate"
+description = "Open URL in chromeless window"
 
 [dependencies]
 wry = "0.27.0"
