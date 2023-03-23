@@ -18,6 +18,10 @@ struct Cli {
     #[arg(default_value = "https://github.com/ilpropheta/bellamy")]
     url: String,
 
+    /// Create maximized window
+    #[arg(long)]
+    maximized: bool,
+
     /// Create borderless fullscreens on current monitor
     #[arg(long)]
     fullscreen: bool,
@@ -33,6 +37,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new()
         .with_title(cli.title)
+        .with_maximized(cli.maximized)
         .with_fullscreen(match cli.fullscreen {
             true => Some(Fullscreen::Borderless(None)),
             false => None
@@ -47,9 +52,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         *control_flow = ControlFlow::Wait;
 
         match event {
-            Event::NewEvents(StartCause::Init) => {
-                println!("Bellamy has started!")
-            }
             Event::WindowEvent { event: WindowEvent::CloseRequested, .. } => {
                 *control_flow = ControlFlow::Exit
             }
