@@ -1,6 +1,6 @@
 # bellamy
 
-Open URL in chromeless window
+Open URL in chromeless window.
 
 ```
 Usage: bellamy.exe [OPTIONS] [URL]
