@@ -4,7 +4,7 @@ use std::error::Error;
 use wry::{
     webview::WebViewBuilder,
     application::{
-        event::{Event, StartCause, WindowEvent},
+        event::{Event, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
         window::{WindowBuilder, Fullscreen},
     },
@@ -26,6 +26,14 @@ struct Cli {
     #[arg(long)]
     fullscreen: bool,
 
+    /// Enable developer tools
+    #[arg(long, default_value="false")]
+    devtools: bool,
+
+    /// Disable the close button
+    #[arg(long, default_value="false")]
+    unclosable: bool,
+
     /// Window title
     #[arg(long, default_value = "Bellamy")]
     title: String,
@@ -42,10 +50,12 @@ fn main() -> Result<(), Box<dyn Error>> {
             true => Some(Fullscreen::Borderless(None)),
             false => None
         })
+        .with_closable(!cli.unclosable)
         .build(&event_loop)?;
 
     let _webview = WebViewBuilder::new(window)?
         .with_url(&cli.url)?
+        .with_devtools(cli.devtools)
         .build()?;
 
     event_loop.run(move |event, _, control_flow| {
