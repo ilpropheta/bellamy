@@ -6,7 +6,7 @@ use wry::{
     application::{
         event::{Event, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
-        window::{WindowBuilder, Fullscreen},
+        window::{WindowBuilder, Fullscreen}, platform::windows::{IconExtWindows},
     },
 };
 use clap::Parser;
@@ -27,16 +27,20 @@ struct Cli {
     fullscreen: bool,
 
     /// Enable developer tools
-    #[arg(long, default_value="false")]
+    #[arg(long)]
     devtools: bool,
 
     /// Disable the close button
-    #[arg(long, default_value="false")]
+    #[arg(long)]
     unclosable: bool,
 
     /// Window title
     #[arg(long, default_value = "Bellamy")]
     title: String,
+
+    /// Path to the window icon
+    #[arg(long, default_value = "")]
+    icon: String,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -51,6 +55,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             false => None
         })
         .with_closable(!cli.unclosable)
+        .with_window_icon(match cli.icon.is_empty(){
+            true => None,
+            false => Some(wry::application::window::Icon::from_path(cli.icon, None)?)
+        })
         .build(&event_loop)?;
 
     let _webview = WebViewBuilder::new(window)?
