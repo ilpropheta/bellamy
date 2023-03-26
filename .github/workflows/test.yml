@@ -1,0 +1,36 @@
+name: Manual Build
+
+on: [workflow_dispatch]
+
+# on:
+#   release:
+#     types: [created]
+
+jobs:
+  build:
+    name: Rust Build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+        profile: minimal
+    - uses: actions-rs/cargo@v1
+      name: Debug Build
+      with:
+        command: build
+        args: --profile dev
+    - uses: actions-rs/cargo@v1
+      name: Release Build
+      with:
+        command: build
+        args: --profile release
+    - uses: actions/upload-artifact@v3
+      with:
+        name: binaries
+        path: |
+          target/debug/bellamy.exe
+          target/debug/bellamy.pdb
+          target/release/bellamy.exe
