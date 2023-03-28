@@ -10,6 +10,7 @@ use wry::{
     },
 };
 use clap::Parser;
+use wry::application::window::Icon;
 
 #[derive(Parser)]
 #[command(version, about)]
@@ -39,14 +40,19 @@ struct Cli {
     title: String,
 
     /// Path to the window icon
-    #[arg(long, default_value = "")]
-    icon: String,
+    #[arg(long)]
+    icon: Option<String>,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
     let cli = Cli::parse();
 
     let event_loop = EventLoop::new();
+
+    let icon = cli.icon
+        .map(|icon| Icon::from_path(icon, None))
+        .transpose()?;
+
     let window = WindowBuilder::new()
         .with_title(cli.title)
         .with_maximized(cli.maximized)
@@ -55,10 +61,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             false => None
         })
         .with_closable(!cli.unclosable)
-        .with_window_icon(match cli.icon.is_empty(){
-            true => None,
-            false => Some(wry::application::window::Icon::from_path(cli.icon, None)?)
-        })
+        .with_window_icon(icon)
         .build(&event_loop)?;
 
     let _webview = WebViewBuilder::new(window)?
