@@ -18,3 +18,11 @@ Options:
   -h, --help           Print help
   -V, --version        Print version
 ```
+
+## Installation
+
+`bellamy` is just an executable that depends on:
+- [Visual C++ runtime](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+- [WebView2 runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+
+Be sure you have both installed on your system to use bonnet.
