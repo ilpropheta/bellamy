@@ -3,7 +3,7 @@
 Open URL in chromeless window.
 
 ```
-Usage: bellamy.exe [OPTIONS] [URL]
+Usage: `bellamy.exe [OPTIONS] [URL]`
 
 Arguments:
   [URL]  URL to open [default: https://ilpropheta.github.io/bellamy]
@@ -25,4 +25,4 @@ Options:
 - [Visual C++ runtime](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 - [WebView2 runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
-Be sure you have both installed on your system to use bonnet.
+Be sure you have both installed on your system to use `bellamy`.
