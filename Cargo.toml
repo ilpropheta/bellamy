@@ -7,6 +7,7 @@ description = "Chromeless window opener for demanding pirates"
 [dependencies]
 wry = "0.27.0"
 clap = { version = "4.1.8", features = ["derive"] }
+windows = { version = "0.48.0", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging"] }
 
 [build-dependencies]
 winres = "0.1"

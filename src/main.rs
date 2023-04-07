@@ -1,5 +1,7 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
+mod msgbox;
+
 use std::error::Error;
 use wry::{
     webview::WebViewBuilder,
@@ -16,7 +18,6 @@ use wry::application::window::Icon;
 #[command(version, about)]
 struct Cli {
     /// URL to open
-    #[arg(default_value = "https://ilpropheta.github.io/bellamy")]
     url: String,
 
     /// Create maximized window
@@ -45,7 +46,10 @@ struct Cli {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let cli = Cli::parse();
+    let cli = Cli::try_parse().map_err(|e| {
+        msgbox::show("Bellamy", e.to_string());
+        e
+    })?;
 
     let event_loop = EventLoop::new();
 
